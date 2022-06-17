@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int N=1e5+10;
+
+vector<int>g[N];
+int visited[N];
+bool isloopexist=false;
+
+
+ bool dfs(int vertex,int parent)
+ {
+   visited[vertex]=1;
+   for(int child:g[vertex])
+   {
+    if(visited[child]==1 && child==parent)
+     continue;
+    if(visited[child]==1)
+    return true;
+
+  isloopexist |=dfs(child,parent);
+}
+
+  return isloopexist;
+}
+
+int main()
+{
+ int v,e;
+ cout<<"enter number of vertices and edges="<<endl;
+ cin>>v>>e;
+ for(int i=0;i<e;i++)
+ {
+  int x,y;
+  cout<<"enter edges="<<endl;
+  cin>>x>>y;
+  g[x].push_back(y);
+  g[y].push_back(x);
+ }
+
+ 
+ for(int i=1;i<=v;i++)
+ {
+   if(visited[i]==1)
+    continue;
+   if(dfs(i,0)==true)
+     isloopexist=true;
+     break;
+ }
+  cout<<isloopexist<<endl;
+}  
+ 
